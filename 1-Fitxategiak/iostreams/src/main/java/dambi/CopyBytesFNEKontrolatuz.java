@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class CopyBytesFNEKontrolatuz {
+
+    /* Programa honek, FileNotFound exception-a ateratzean, errore mezu bat bueltatuko du.*/
     public static void main(String[] args) throws IOException {
 
         FileInputStream in = null;

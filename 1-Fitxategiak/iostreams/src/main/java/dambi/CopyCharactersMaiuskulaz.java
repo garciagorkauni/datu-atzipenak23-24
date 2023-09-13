@@ -7,6 +7,8 @@ import java.io.IOException;
 public class CopyCharactersMaiuskulaz {
     public static void main(String[] args) throws IOException {
 
+        /* Programa honek, karaktere denak maiuskulaz jartzen ditu. */
+
         FileReader inputStream = null;
         FileWriter outputStream = null;
 
@@ -16,7 +18,6 @@ public class CopyCharactersMaiuskulaz {
 
             int c;
             while ((c = inputStream.read()) != -1) {
-                System.out.println();
                 
                 if(c >= 97 && c <= 122 ){
                     c -= 32;

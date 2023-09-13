@@ -7,6 +7,8 @@ import java.io.IOException;
 public class CopyCharactersOrdezkatuz {
     public static void main(String[] args) throws IOException {
 
+        /* Programa honek, a edo A karaktereak, o eta O-rekin ordezkatzen du */
+
         FileReader inputStream = null;
         FileWriter outputStream = null;
 

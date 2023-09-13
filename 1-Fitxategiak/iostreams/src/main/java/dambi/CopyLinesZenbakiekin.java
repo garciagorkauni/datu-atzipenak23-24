@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 public class CopyLinesZenbakiekin {
 public static void main(String[] args) throws IOException {
 
+        /* Programa honek, lerroaren zenbakia idazten du honen parean. */
+
         BufferedReader inputStream = null;
         PrintWriter outputStream = null;
 
