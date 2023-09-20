@@ -124,9 +124,9 @@ public class MainMenua {
         try {
             inputStream = new BufferedReader(new FileReader(FITXATEGIA));
             outputStreamG = new PrintWriter(new FileWriter("Gipuzkoa.csv"));
-            outputStreamA = new PrintWriter(new FileWriter("Gipuzkoa.csv"));
-            outputStreamB = new PrintWriter(new FileWriter("Gipuzkoa.csv"));
-            outputStreamN = new PrintWriter(new FileWriter("Gipuzkoa.csv"));
+            outputStreamA = new PrintWriter(new FileWriter("Araba.csv"));
+            outputStreamB = new PrintWriter(new FileWriter("Bizkaia.csv"));
+            outputStreamN = new PrintWriter(new FileWriter("Nafarroa.csv"));
 
             String line;
             while ((line = inputStream.readLine()) != null) {
