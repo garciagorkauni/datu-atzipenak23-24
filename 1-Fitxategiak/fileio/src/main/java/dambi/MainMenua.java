@@ -115,7 +115,6 @@ public class MainMenua {
         // Scanner objektua itxi
         scanner.close();
     }
-    }
 
     /**Hurrengo karpeta egitura sortu behar du funtzio honek:
     karpeta_berriak
@@ -132,7 +131,39 @@ public class MainMenua {
 
     /** Galdera batzuk egin ondoren, fitxategi bat sortu behar du leku egokian */
     public static void fitxategiaSortu(){
-        
+        // Scanner objektua sortu
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            // Karpetaren izena eskatu eta sortu path-a
+
+
+
+
+            // Fitxategiaren izena eskatu erabiltzaileari
+            System.out.println("Zein? ");
+            String izena = scanner.next();
+            izena += ".txt"
+
+            // Fitxategiaren edukia eskatu erabiltzaileari
+            System.out.println("Nolakoa da? ");
+            String edukia = scanner.next();
+
+            // Fitxategiaren path-a sortu
+            File fitxategia = new File(karpeta, izena);
+
+            // Fitxategia sortu
+            try (FileWriter fileWriter = new FileWriter(fitxategia)) {
+                // Deskribapena fitxategian idatzi
+                fileWriter.write(edukia);
+                System.out.println(izena + " fitxategia ongi sortu da.");
+            } catch (IOException e) {
+                System.out.println("Errorea gertatu da fitxategia sortzerakoan: " + e.getMessage());
+            }
+        } finally {
+            // Scanner objektua itxi
+            scanner.close();
+        }
     }
 
 }
