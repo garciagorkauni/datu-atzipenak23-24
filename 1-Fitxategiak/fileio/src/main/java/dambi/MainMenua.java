@@ -54,6 +54,29 @@ public class MainMenua {
 
     /** Erabiltzaileari fitxategi/direktorio baten path absolutoa eskatu eta gure fitxategi sisteman ba ote daukagun egiaztatu behar du funtzio honek */
     public static void pathAbsolutuaBilatu(){
+        // Scanner objektua sortu
+        Scanner scanner = new Scanner(System.in);
+
+        // Erabiltzaileari path absolutoa eskatu
+        System.out.println("Sartu fitxategi/direktorioaren path absolutoa:");
+        String pathAbsoluto = scanner.nextLine();
+
+        // File objektua sortu path absolutoarekin
+        File fitxategia = new File(pathAbsoluto);
+
+        // Egiaztatu fitxategi/direktorioa existitzen al da
+        if (fitxategia.exists()) {
+            if (fitxategia.isFile()) {
+                System.out.println("Fitxategia existitzen da.");
+            } else if (fitxategia.isDirectory()) {
+                System.out.println("Direktorioa existitzen da.");
+            }
+        } else {
+            System.out.println("Fitxategia edo direktorio hori ez da aurkitzen sisteman.");
+        }
+
+        // Scanner objektua itxi
+        scanner.close();
     }
 
     /** Direktorio zehatz baten lehen mailako edukia erakutsi behar du funtzio honek */
