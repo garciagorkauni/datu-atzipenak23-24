@@ -58,8 +58,8 @@ public class MainMenua {
         Scanner scanner = new Scanner(System.in);
 
         // Erabiltzaileari path absolutoa eskatu
-        System.out.println("Sartu fitxategi/direktorioaren path absolutoa:");
-        String pathAbsoluto = scanner.nextLine();
+        System.out.println("Sartu fitxategi/direktorioaren path absolutoa: ");
+        String pathAbsoluto = scanner.next();
 
         // File objektua sortu path absolutoarekin
         File fitxategia = new File(pathAbsoluto);
@@ -81,7 +81,40 @@ public class MainMenua {
 
     /** Direktorio zehatz baten lehen mailako edukia erakutsi behar du funtzio honek */
     public static void edukiaIkusi(){
-        
+        // Scanner objektua sortu
+        Scanner scanner = new Scanner(System.in);
+
+        // Karpeta baten path absolutoa eskatu erabiltzaileari
+        System.out.println("Sartu karpetaaren path absolutoa: ");
+        String karpetaPath = scanner.next();
+
+        // File objektua sortu karpetaPath erabiliz
+        File karpeta = new File(karpetaPath);
+
+        // Egiaztatu karpeta existitzen dela
+        if (karpeta.exists() && karpeta.isDirectory()) {
+            // Karpeta existitzen da, egiaztatu fitxategiak daudela
+            File[] fitxategiak = karpeta.listFiles();
+
+            if (fitxategiak != null && fitxategiak.length > 0) {
+                System.out.println(karpetaPath + " karpetaren edukia:");
+                for (File fitxategia : fitxategiak) {
+                    if (fitxategia.isFile()) {
+                        System.out.println("|- " + fitxategia.getName());
+                    } else if (fitxategia.isDirectory()) {
+                        System.out.println("|- " + fitxategia.getName() + "/");
+                    }
+                }
+            } else {
+                System.out.println("Karpeta hutsik dago.");
+            }
+        } else {
+            System.out.println("Karpeta hori ez da aurkitzen sisteman.");
+        }
+
+        // Scanner objektua itxi
+        scanner.close();
+    }
     }
 
     /**Hurrengo karpeta egitura sortu behar du funtzio honek:
