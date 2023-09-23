@@ -1,11 +1,18 @@
-package main.java.dambi;
+package dambi;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -14,7 +21,7 @@ public class MainMenua {
 
     /**This method is the main menu of the program */
     public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int aukera = 0;
         do {
             System.out.println();
@@ -28,7 +35,7 @@ public class MainMenua {
             System.out.println("5.- Irten");
             System.out.println("");
             System.out.print("Aukeratu zenbaki bat: ");
-            aukera = in.nextInt();
+            aukera = scanner.nextInt();
             switch (aukera) {
                 case 1:
                     pathAbsolutuaBilatu();
@@ -49,34 +56,36 @@ public class MainMenua {
                     System.out.println("Aukera okerra. Saiatu berriz.");
             }
         } while (aukera != 5);
-        in.next();
     }
 
     /** Erabiltzaileari fitxategi/direktorio baten path absolutoa eskatu eta gure fitxategi sisteman ba ote daukagun egiaztatu behar du funtzio honek */
-    public static void pathAbsolutuaBilatu(){
+    public static void pathAbsolutuaBilatu() throws Exception{
         // Scanner objektua sortu
         Scanner scanner = new Scanner(System.in);
 
         // Erabiltzaileari path absolutoa eskatu
-        System.out.println("Sartu fitxategi/direktorioaren path absolutoa: ");
-        String pathAbsoluto = scanner.next();
+        System.out.print("Sartu fitxategi/direktorioaren path absolutoa: ");
+        String pathAbsolutua = scanner.next();
 
-        // File objektua sortu path absolutoarekin
-        File fitxategia = new File(pathAbsoluto);
+        //Path objektua sortu eskatutako path absolutuarekin
+        Path ruta = Paths.get(pathAbsolutua);
 
-        // Egiaztatu fitxategi/direktorioa existitzen al da
-        if (fitxategia.exists()) {
-            if (fitxategia.isFile()) {
-                System.out.println("Fitxategia existitzen da.");
-            } else if (fitxategia.isDirectory()) {
-                System.out.println("Direktorioa existitzen da.");
-            }
-        } else {
-            System.out.println("Fitxategia edo direktorio hori ez da aurkitzen sisteman.");
+        // Egiaztatu path-a existitzen dela
+        try {
+            Path fp = ruta.toRealPath();
+            System.out.println("Sartutako path-a sisteman badago...");
+        } catch (NoSuchFileException x) {
+            // Path-a ez da existitzen
+            System.err.format("Sartutako path-a ez dago sisteman...");
+            System.out.println();
+        } catch (IOException x) {
+            // Beste motatako errorea
+            System.err.format("%s%n", x);
+            System.out.println();
         }
 
         // Scanner objektua itxi
-        scanner.close();
+        //scanner.close(); Ixterakoan metodoaren barruan, errorea sortzen da.
     }
 
     /** Direktorio zehatz baten lehen mailako edukia erakutsi behar du funtzio honek */
@@ -85,7 +94,7 @@ public class MainMenua {
         Scanner scanner = new Scanner(System.in);
 
         // Karpeta baten path absolutoa eskatu erabiltzaileari
-        System.out.println("Sartu karpetaaren path absolutoa: ");
+        System.out.print("Sartu karpetaren path absolutoa: ");
         String karpetaPath = scanner.next();
 
         // File objektua sortu karpetaPath erabiliz
@@ -113,7 +122,7 @@ public class MainMenua {
         }
 
         // Scanner objektua itxi
-        scanner.close();
+        //scanner.close(); Ixterakoan metodoaren barruan, errorea sortzen da.
     }
 
     /**Hurrengo karpeta egitura sortu behar du funtzio honek:
@@ -126,7 +135,39 @@ public class MainMenua {
         └── esnekiak
     */
     public static void direktorioakSortu(){
-        
+        // Direktorioen path-ak definitu
+        Path relative = Paths.get("1-Fitxategiak\\fileio");
+
+        Path animaliak = Paths.get(relative + "\\animaliak");
+        Path elikagaiak = Paths.get(relative + "\\elikagaiak");
+        Path barazkiak = Paths.get(relative + "\\barazkiak");
+        Path esnekiak = Paths.get(relative + "\\esnekiak");
+
+        Path arrainak = Paths.get(relative + "\\animaliak\\arrainak");
+        Path ugaztunak = Paths.get(relative + "\\animaliak\\ugaztunak");
+
+
+        try {
+            // Direktorioak sortu
+            Files.createDirectory(animaliak);
+            Files.createDirectory(elikagaiak);
+            Files.createDirectory(barazkiak);
+            Files.createDirectory(esnekiak);
+
+            Files.createDirectory(arrainak);
+            Files.createDirectory(ugaztunak);
+
+            System.out.println("Direktorioak ondo sortu dira!");
+
+        } catch (FileAlreadyExistsException x) {
+            // Direktorioa jada sortuta badago
+            System.err.format("Ezin izan da direktorioa sortu, jada sortuta dagoelako");
+            System.out.println();
+        } catch (IOException x) {
+            // Beste motatako errorea
+            System.err.format("createFile error: %s%n", x);
+            System.out.println();
+        }        
     }
 
     /** Galdera batzuk egin ondoren, fitxategi bat sortu behar du leku egokian */
@@ -134,37 +175,77 @@ public class MainMenua {
         // Scanner objektua sortu
         Scanner scanner = new Scanner(System.in);
 
-        try {
-            // Karpetaren izena eskatu eta sortu path-a
+        // Karpetaren izena eskatu path-a sortzeko
+        System.out.print("Zer zoaz deskribatzera? ");
+        String karpeta = scanner.next();
 
+        Path relative = Paths.get("1-Fitxategiak\\fileio");
+        Path karpetaPath = Paths.get("");
 
+        // Path-a ezarri
+        switch (karpeta.toLowerCase()) {
+            case "arrainak":
+                // Arrainak
+                karpetaPath = Paths.get(relative +  "\\animaliak\\arrainak");
+                break;
 
+            case "ugaztunak":
+                // Ugaztunak
+                karpetaPath = Paths.get(relative +  "\\animaliak\\ugaztunak");
+                break;
 
-            // Fitxategiaren izena eskatu erabiltzaileari
-            System.out.println("Zein? ");
-            String izena = scanner.next();
-            izena += ".txt"
+            case "elikagaiak":
+                // Elikagaiak
+                karpetaPath = Paths.get(relative +  "\\elikagaiak");
+                break;
 
-            // Fitxategiaren edukia eskatu erabiltzaileari
-            System.out.println("Nolakoa da? ");
-            String edukia = scanner.next();
+            case "barazkiak":
+                // Barazkiak
+                karpetaPath = Paths.get(relative +  "\\barazkiak");
+                break;
 
-            // Fitxategiaren path-a sortu
-            File fitxategia = new File(karpeta, izena);
+            case "esnekiak":
+                // Esnekiak
+                karpetaPath = Paths.get(relative +  "\\esnekiak");
+                break;
 
-            // Fitxategia sortu
-            try (FileWriter fileWriter = new FileWriter(fitxategia)) {
-                // Deskribapena fitxategian idatzi
-                fileWriter.write(edukia);
-                System.out.println(izena + " fitxategia ongi sortu da.");
-            } catch (IOException e) {
-                System.out.println("Errorea gertatu da fitxategia sortzerakoan: " + e.getMessage());
-            }
-        } finally {
-            // Scanner objektua itxi
-            scanner.close();
+            default:
+                System.out.println("Sartutako aukera ez da egokia (Arrainak, Ugaztunak, Elikagaiak, Barazkiak, Esnekiak)...");
+                break;
         }
-    }
 
+        // Fitxategiaren izena eskatu erabiltzaileari
+        System.out.print("Zein? ");
+        String izena = scanner.next();
+        izena.concat(".txt");
+
+        // Fitxategiaren path-a definitu eta fitxategia sortu
+        Path file = Paths.get(karpetaPath + "\\" + izena);
+        try {
+            Files.createFile(file);
+        } catch (IOException x) {
+            // Beste motatako errorea
+            System.err.format("createFile error: %s%n", x);
+            System.out.println();
+        }
+
+        // Fitxategiaren edukia eskatu erabiltzaileari
+        System.out.print("Nolakoa da? ");
+        String edukia = scanner.next();
+
+        // Edukia idatze fitxategian
+        Charset charset = Charset.forName("US-ASCII");
+        String s = edukia;
+        try (BufferedWriter writer = Files.newBufferedWriter(file, charset)) {
+            writer.write(s, 0, s.length());
+        } catch (IOException x) {
+            // Beste motatako errorea
+            System.err.format("createFile error: %s%n", x);
+            System.out.println();
+        }
+
+        // Scanner objektua itxi
+        //scanner.close(); Ixterakoan metodoaren barruan, errorea sortzen da.
+    }
 }
 
