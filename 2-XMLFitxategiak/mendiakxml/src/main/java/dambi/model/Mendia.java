@@ -12,6 +12,7 @@ public class Mendia {
     int altuera;
     String probintzia;
 
+
     // Class constructor
     public Mendia() {
     }
