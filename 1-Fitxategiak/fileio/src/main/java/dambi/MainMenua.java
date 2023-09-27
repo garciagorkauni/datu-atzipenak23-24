@@ -78,7 +78,7 @@ public class MainMenua {
             // Path-a ez da existitzen
             System.err.format("Sartutako path-a ez dago sisteman...");
             System.out.println();
-        } catch (IOException x) {
+        } catch (Exception x) {
             // Beste motatako errorea
             System.err.format("%s%n", x);
             System.out.println();
