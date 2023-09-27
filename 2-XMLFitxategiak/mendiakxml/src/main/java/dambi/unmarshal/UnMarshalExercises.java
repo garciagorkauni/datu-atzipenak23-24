@@ -32,6 +32,20 @@ public class UnMarshalExercises {
             jaxbMarshaller.marshal(mendiak, new File( "./XML_Files/mendiak_oinatan.xml" ) );
             jaxbMarshaller.marshal(mendiak, System.out );
 
+            // Find the mountain located in Gipuzkoa
+            Mendiak gipuzkoan = new Mendiak();
+            for (int i = 0; i < mendiak.getMendiak().size(); i++) {
+                Mendia mendia = mendiak.getMendiak().get(i);
+                if(mendia.getProbintzia() == "Gipuzkoa"){
+                    gipuzkoan.add(mendia);
+                }
+            }
+
+            // Create the xml file with the changes
+            jaxbMarshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, true );
+            jaxbMarshaller.marshal(gipuzkoan, new File( "./XML_Files/gipuzkoako_mendiak.xml" ) );
+            jaxbMarshaller.marshal(gipuzkoan, System.out );
+
         } catch (JAXBException e) {
             e.printStackTrace();
         }
