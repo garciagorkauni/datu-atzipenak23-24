@@ -36,7 +36,7 @@ public class UnMarshalExercises {
             Mendiak gipuzkoan = new Mendiak();
             for (int i = 0; i < mendiak.getMendiak().size(); i++) {
                 Mendia mendia = mendiak.getMendiak().get(i);
-                if(mendia.getProbintzia() == "Gipuzkoa"){
+                if(mendia.getProbintzia().equals("Gipuzkoa")){
                     gipuzkoan.add(mendia);
                 }
             }
