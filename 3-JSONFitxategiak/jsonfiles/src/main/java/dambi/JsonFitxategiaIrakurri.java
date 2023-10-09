@@ -9,5 +9,6 @@ public class JsonFitxategiaIrakurri {
     public static void main(String[] args) {
         JsonReader reader = Json.createReader(new FileReader("jsondata.txt"));
         JsonStructure jsonst = reader.read();
+        System.out.println(jsonst);
     }
 }
