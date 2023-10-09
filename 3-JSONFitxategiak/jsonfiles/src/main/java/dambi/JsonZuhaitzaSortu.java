@@ -1,4 +1,4 @@
-package main.java.dambi;
+package dambi;
 
 import javax.json.Json;
 import javax.json.JsonObject;
