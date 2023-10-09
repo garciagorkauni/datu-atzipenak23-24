@@ -21,5 +21,7 @@ public class JsonZuhaitzaSortu {
                     .add("type", "home")
                     .add("number", "222-222-2222")))
             .build();
+        
+        System.out.println(model);
     }
 }
