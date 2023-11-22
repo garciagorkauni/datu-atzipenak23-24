@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dambi</groupId>
-	<artifactId>lehen-restapia</artifactId>
+	<artifactId>rest-greeting</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lehen-restapia</name>
+	<name>rest-greeting</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
