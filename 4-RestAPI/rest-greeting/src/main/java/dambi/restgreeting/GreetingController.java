@@ -29,6 +29,9 @@ public class GreetingController {
             case "en":
                 content = "Hello  " + name + "!";
                 break;
+            
+            default:
+                content = "Hello world!";
         }
 		return new Greeting(counter.incrementAndGet(), content);
 	}
